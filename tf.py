@@ -13,10 +13,10 @@ from telegram.ext import (
 from yt_dlp import YoutubeDL
 
 # ========== إعدادات البوت ==========
-TOKEN = os.getenv('TELEGRAM_TOKEN', '7844256099:AAE2NQSVBU_VaYT_4RdZxFocLZLv_jfqVrs')
-PORT = int(os.getenv('PORT', 10000))  # Render يستخدم 10000
-WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://aboali00tf-py.onrender.com')
-COOKIES_FILE = os.getenv('COOKIES_FILE', 'cookies.txt')
+TOKEN = '7844256099:AAE2NQSVBU_VaYT_4RdZxFocLZLv_jfqVrs'  # توكن البوت الخاص بك
+WEBHOOK_URL = 'https://aboali00tf-py.onrender.com/webhook'  # رابط الويب هوك الخاص بك
+PORT = 10000  # المنفذ المطلوب لـ Render
+COOKIES_FILE = 'cookies.txt'  # ملف الكوكيز
 MAX_FILE_SIZE = 2000 * 1024 * 1024  # 2GB كحد أقصى
 
 # ========== إعداد التسجيل ==========
@@ -87,7 +87,7 @@ async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
     url = context.user_data['url']
     title = context.user_data['title']
     
-    await query.edit_message_text(f"⏳ جار التحميل... الرجاء الانتظار قد تستغرق العملية بضع دقائق.")
+    await query.edit_message_text("⏳ جار التحميل... الرجاء الانتظار قد تستغرق العملية بضع دقائق.")
     
     try:
         ydl_opts = {
@@ -139,17 +139,13 @@ def main():
     if not os.path.exists(COOKIES_FILE):
         logger.warning(f"ملف الكوكيز {COOKIES_FILE} غير موجود. قد لا تعمل تنزيلات تويتر.")
     
-    if os.getenv('RENDER'):
-        logger.info(f"بدء التشغيل في وضع ويب هوك على المنفذ {PORT}")
-        app.run_webhook(
-            listen="0.0.0.0",
-            port=PORT,
-            webhook_url=WEBHOOK_URL,
-            cert=None
-        )
-    else:
-        logger.info("بدء التشغيل في وضع polling")
-        app.run_polling()
+    logger.info(f"بدء التشغيل في وضع ويب هوك على المنفذ {PORT}")
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=WEBHOOK_URL,
+        cert=None
+    )
 
 if __name__ == '__main__':
     main()
