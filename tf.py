@@ -14,7 +14,7 @@ from yt_dlp import YoutubeDL
 
 # إعدادات البوت - يمكن تعديلها
 TOKEN = os.getenv('TELEGRAM_TOKEN', '7844256099:AAE2NQSVBU_VaYT_4RdZxFocLZLv_jfqVrs')
-PORT = int(os.getenv('PORT', 8443))
+PORT = int(os.getenv('PORT', 10000))  # Render يستخدم 10000
 WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://aboali00tf-py.onrender.com')
 COOKIES_FILE = os.getenv('COOKIES_FILE', 'cookies.txt')
 MAX_FILE_SIZE = 2000 * 1024 * 1024  # 2GB كحد أقصى
@@ -127,9 +127,9 @@ async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 video=video_file,
                 caption=f"✅ {title}",
                 supports_streaming=True,
-                read_timeout=60,
-                write_timeout=60,
-                connect_timeout=60
+                read_timeout=120,
+                write_timeout=120,
+                connect_timeout=120
             )
         
         # حذف الملف المؤقت
@@ -139,7 +139,7 @@ async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(f"Download error: {e}")
         await query.edit_message_text("❌ فشل التحميل. قد يكون الفيديو محمياً أو الدقة غير متوفرة.")
-        if os.path.exists(filename):
+        if 'filename' in locals() and os.path.exists(filename):
             os.remove(filename)
 
     return -1
@@ -157,14 +157,6 @@ def main():
     if not os.path.exists(COOKIES_FILE):
         logger.warning(f"ملف الكوكيز {COOKIES_FILE} غير موجود. قد لا تعمل تنزيلات تويتر.")
     
-    # إعداد ويب هوك
-    logger.info(f"Starting bot in webhook mode on port {PORT}")
-    application.run_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        webhook_url=WEBHOOK_URL,
-        cert=None,
-    )
-
-if __name__ == "__main__":
-    main()
+    # تحديد وضع التشغيل
+    if os.getenv('RENDER'):
+        logger.inf
