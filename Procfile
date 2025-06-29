@@ -1,1 +1,1 @@
-python tf.py
+web: ./start.sh
