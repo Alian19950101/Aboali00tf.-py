@@ -1,0 +1,24 @@
+# ملفات البيئة
+.env
+cookies.txt
+
+# ملفات بايثون
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# بيئات افتراضية
+venv/
+env/
+
+# ملفات نظام
+.DS_Store
+Thumbs.db
+
+# ملفات تسجيل
+*.log
+
+# ملفات مؤقتة
+*.tmp
+*.temp
