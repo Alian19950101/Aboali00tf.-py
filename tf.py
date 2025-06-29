@@ -15,7 +15,7 @@ from yt_dlp import YoutubeDL
 # إعدادات البوت - يمكن تعديلها
 TOKEN = os.getenv('TELEGRAM_TOKEN', '7844256099:AAE2NQSVBU_VaYT_4RdZxFocLZLv_jfqVrs')
 PORT = int(os.getenv('PORT', 8443))
-WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://yourdomain.com/webhook')
+WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://aboali00tf-py.onrender.com')
 COOKIES_FILE = os.getenv('COOKIES_FILE', 'cookies.txt')
 MAX_FILE_SIZE = 2000 * 1024 * 1024  # 2GB كحد أقصى
 
